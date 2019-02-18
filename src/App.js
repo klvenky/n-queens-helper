@@ -15,13 +15,23 @@ function App() {
   const [disabledPositions, setDisabledPositions] = useState([]);
   const insertQueen = (x, y) => {
     const disabledBlock = disabledPositions.length > 0 && disabledPositions.find(a => a.x === x && a.y === y);
-    if (!disabledBlock) {
-      setQueenBlocks(queenBlocks.concat({ x, y }));
+    if (!disabledBlock) setQueenBlocks(queenBlocks.concat({ x, y }));
+  };
+  const removeQueen = (x, y) => {
+    const temp = queenBlocks;
+    const removeIndex = queenBlocks.indexOf({ x, y });
+    if (removeIndex) {
+      temp.splice(removeIndex, 1);
+      console.log('temp ===> ', temp);
+      setQueenBlocks(temp);
     }
   };
   useEffect(() => {
+    console.log('in useeffect', queenBlocks);
     const update = findDisabledBlocks(queens, queenBlocks);
-    if (!isEqual(update, disabledPositions)) setDisabledPositions(update);
+    const shouldUpdate = !isEqual(update, disabledPositions);
+    console.log('should Update == ', shouldUpdate);
+    if (shouldUpdate) setDisabledPositions(update);
   }, [queenBlocks]);
   return (
     <div className="App">
@@ -46,6 +56,7 @@ function App() {
                   checked={queenPlaced}
                   onQueenPlace={insertQueen}
                   disabled={isDisabled}
+                  onQueenRemove={removeQueen}
                 />
               );
             })}
@@ -56,9 +67,13 @@ function App() {
   );
 }
 function Box(props) {
-  const { checked, disabled, onQueenPlace, x, y } = props;
+  const { checked, disabled, onQueenPlace, x, y, onQueenRemove } = props;
   const onClick = () => {
     if (!disabled) onQueenPlace(x, y);
+    else if (checked) {
+      console.log('remove queen');
+      onQueenRemove(x, y);
+    }
   }
   return (
     <div style={getBoxStyle(checked, disabled)} onClick={onClick} key={`${x}-${y}`}>
