@@ -16,7 +16,10 @@
     "deploy": "npm run build && surge build n-queens-helper.surge.sh"
   },
   "husky": {
-    "post-commit": "npm run deploy"
+    "hooks": {
+      "pre-commit": "npm run build",
+      "pre-push": "npm run deploy"
+    }
   },
   "eslintConfig": {
     "extends": "react-app"
