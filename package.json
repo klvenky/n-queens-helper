@@ -13,10 +13,11 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "npm run build && surge build n-queens-helper.surge.sh"
+    "deploy": "surge build n-queens-helper.surge.sh"
   },
   "husky": {
     "hooks": {
+      "pre-commit": "npm run build",
       "pre-push": "npm run deploy"
     }
   },
