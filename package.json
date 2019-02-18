@@ -1,6 +1,6 @@
 {
   "name": "n-queens-helper-ui",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "dependencies": {
     "lodash": "^4.17.11",
@@ -13,7 +13,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "surge . n-queen-helper.surge.sh"
+    "deploy": "surge . n-queens-helper.surge.sh",
+    "postversion": "npm run deploy"
   },
   "eslintConfig": {
     "extends": "react-app"
