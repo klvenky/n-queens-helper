@@ -25,14 +25,14 @@ function App() {
   }, [queenBlocks]);
   return (
     <div className="App">
-      <header className="App-header">
+      <div className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Welcome to N-Queens Helper
         </p>
         <button onClick={() => setQueenBlocks([])}>Reset</button>
-      </header>
-      <div>
+      </div>
+      <div className="Queen-board">
         {ARR.map(x => (
           <div key={`div-${x}`}>
             {ARR.map(y => {

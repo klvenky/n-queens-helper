@@ -1,11 +1,10 @@
 .App {
   display: flex;
   flex-direction: row;
-  justify-items: center;
 }
 
 .App-logo {
-  /* animation: App-logo-spin infinite 10s linear; */
+  animation: App-logo-spin infinite 10s linear;
 }
 
 .App-header {
@@ -13,6 +12,10 @@
   padding: 1.5rem;
   color: white;
   height: 100vh;
+}
+
+.Queen-board {
+  margin: 10% 10% 10% 30%;
 }
 
 @keyframes App-logo-spin {
