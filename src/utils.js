@@ -12,10 +12,10 @@ export const getBoxStyle = (checked, disabled) => {
   };
 };
 
-export function findDisabledPos(maxQueens, queenPos) {
+export function findDisabledBlocks(maxQueens, queenPositions) {
   const disabled = [];
-  for (let i = 0; i < queenPos.length; i += 1) {
-    const { x, y } = queenPos[i];
+  for (let i = 0; i < queenPositions.length; i += 1) {
+    const { x, y } = queenPositions[i];
     for (let j = 0; j < maxQueens; j += 1) disabled.push({ x, y: j });
     for (let j = 0; j < maxQueens; j += 1) disabled.push({ x: j, y });
     for (let j = 0; j < maxQueens; j += 1) {

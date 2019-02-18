@@ -3,7 +3,7 @@ import './App.css';
 import logo from './logo.svg';
 import isEqual from 'lodash/isEqual';
 import _find from 'lodash/find';
-import { findDisabledPos, getBoxStyle } from './utils';
+import { findDisabledBlocks, getBoxStyle } from './utils';
 
 const DEFAULT = 8;
 const ARR = [];
@@ -20,7 +20,7 @@ function App() {
     }
   };
   useEffect(() => {
-    const update = findDisabledPos(queens, queenBlocks);
+    const update = findDisabledBlocks(queens, queenBlocks);
     if (!isEqual(update, disabledPositions)) setDisabledPositions(update);
   }, [queenBlocks]);
   return (
