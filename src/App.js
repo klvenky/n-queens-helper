@@ -9,6 +9,10 @@ const DEFAULT = 8;
 const ARR = [];
 for (let i = 0; i < DEFAULT; i += 1) ARR[i] = i;
 
+const Link = (props) => {
+  const { children, ...rest } = props;
+  return (<a {...rest} rel="noreferrer noopener">{children}</a>);
+}
 function App() {
   const [queens] = useState(DEFAULT);
   const [queenBlocks, setQueenBlocks] = useState([]);
@@ -78,9 +82,10 @@ function App() {
         </div>
         <footer>
           <div style={{ textAlign: 'center' }}>
-            Crown icon by <a href="https://www.freepik.com/" title="Freepik">Freepik</a> from&nbsp;
-             <a href="https://www.flaticon.com/" title="Flaticon" style={{ textDecorationColor: 'red', textDecoration: 'none' }}>flaticon</a> is licensed by
-          <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
+            Crown icon by <Link href="https://www.freepik.com/" title="Freepik">Freepik</Link>&nbsp;from&nbsp;
+            <Link href="https://www.flaticon.com/" title="Flaticon" style={{ textDecorationColor: 'red', textDecoration: 'none' }}>
+            flaticon&nbsp;</Link>is licensed by&nbsp;
+            <Link href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</Link>
           </div>
         </footer>
       </div>
