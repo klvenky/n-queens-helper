@@ -3,7 +3,6 @@
   "version": "0.1.1",
   "private": true,
   "dependencies": {
-    "lodash": "^4.17.11",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
     "react-scripts": "2.1.5"
@@ -13,12 +12,12 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "surge build n-queens-helper.surge.sh"
+    "deploy": "surge build n-queens-helper.surge.sh",
+    "postversion": "npm run build && npm run deploy"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run build",
-      "pre-push": "npm run deploy"
+      "pre-commit": "npm run build"
     }
   },
   "eslintConfig": {

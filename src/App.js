@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import './App.css';
-import logo from './logo.svg';
 import isEqual from 'lodash/isEqual';
-import _find from 'lodash/find';
-import { findDisabledBlocks, getBoxStyle } from './utils';
+import React, { useEffect, useState } from 'react';
+import './App.css';
+import Box from './box';
+import logo from './logo.svg';
+import { findDisabledBlocks } from './utils';
 
 const DEFAULT = 8;
 const ARR = [];
@@ -13,72 +13,80 @@ function App() {
   const [queens] = useState(DEFAULT);
   const [queenBlocks, setQueenBlocks] = useState([]);
   const [disabledPositions, setDisabledPositions] = useState([]);
+  useEffect(() => {
+    console.log('curr queenBlocks ', queenBlocks);
+    const update = findDisabledBlocks(queens, queenBlocks);
+    const shouldUpdate = !isEqual(update, disabledPositions);
+    // console.log('in effect2 shouldUpdate ===> ', shouldUpdate);
+    console.log('diabled ', update.length);
+    if (shouldUpdate) setDisabledPositions(update);
+  }, [queenBlocks]);
   const insertQueen = (x, y) => {
     const disabledBlock = disabledPositions.length > 0 && disabledPositions.find(a => a.x === x && a.y === y);
     if (!disabledBlock) setQueenBlocks(queenBlocks.concat({ x, y }));
   };
   const removeQueen = (x, y) => {
     const temp = queenBlocks;
-    const removeIndex = queenBlocks.indexOf({ x, y });
-    if (removeIndex) {
-      temp.splice(removeIndex, 1);
-      console.log('temp ===> ', temp);
+    let index = -1;
+    for (let i = 0; i < queens; i++) {
+      const queenBlck = queenBlocks[i];
+      if (queenBlck.x === x && queenBlck.y === y) {
+        index = i;
+        break;
+      }
+    }
+    console.log('removing queen from queenBlocks at ', index);
+    if (index >= 0) {
+      temp.splice(index, 1);
+      console.log('updated remove ', temp);
       setQueenBlocks(temp);
     }
   };
-  useEffect(() => {
-    console.log('in useeffect', queenBlocks);
-    const update = findDisabledBlocks(queens, queenBlocks);
-    const shouldUpdate = !isEqual(update, disabledPositions);
-    console.log('should Update == ', shouldUpdate);
-    if (shouldUpdate) setDisabledPositions(update);
-  }, [queenBlocks]);
+  const resetQueens = () => setQueenBlocks([]);
   return (
     <div className="App">
       <div className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Welcome to N-Queens Helper
-        </p>
-        <button onClick={() => setQueenBlocks([])}>Reset</button>
+        <div style={{ alignContent: 'center' }}>
+          <img src={logo} className="App-logo" alt="logo" />
+          <p>
+            Welcome to N-Queens Helper
+          </p>
+          <button onClick={resetQueens}>Reset</button>
+        </div>
       </div>
-      <div className="Queen-board">
-        {ARR.map(x => (
-          <div key={`div-${x}`}>
-            {ARR.map(y => {
-              const queenPlaced = !!_find(queenBlocks, a => a.x === x && a.y === y);
-              const isDisabled = _find(disabledPositions, a => (a.x === x && a.y === y));
-              return (
-                <Box
-                  key={`pos-${x}-${y}-${isDisabled}`}
-                  x={x}
-                  y={y}
-                  checked={queenPlaced}
-                  onQueenPlace={insertQueen}
-                  disabled={isDisabled}
-                  onQueenRemove={removeQueen}
-                />
-              );
-            })}
+      <div className="div-bg">
+        <div className="Queen-board">
+          {ARR.map(x => (
+            <div key={`div-${x}`}>
+              {ARR.map(y => {
+                const queenPlaced = !!queenBlocks.find(a => a.x === x && a.y === y);
+                const isDisabled = disabledPositions.find(a => (a.x === x && a.y === y));
+                return (
+                  <Box
+                    key={`pos-${x}-${y}-${isDisabled}`}
+                    x={x}
+                    y={y}
+                    checked={queenPlaced}
+                    insertQueen={insertQueen}
+                    disabled={isDisabled}
+                    removeQueen={removeQueen}
+                  />
+                );
+              })}
+            </div>
+          ))}
+        </div>
+        <footer>
+          <div style={{ textAlign: 'center' }}>
+            Crown icon by <a href="https://www.freepik.com/" title="Freepik">Freepik</a> from&nbsp;
+             <a href="https://www.flaticon.com/" title="Flaticon" style={{ textDecorationColor: 'red', textDecoration: 'none' }}>flaticon</a> is licensed by
+          <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
           </div>
-        ))}
+        </footer>
       </div>
     </div>
   );
 }
-function Box(props) {
-  const { checked, disabled, onQueenPlace, x, y, onQueenRemove } = props;
-  const onClick = () => {
-    if (!disabled) onQueenPlace(x, y);
-    else if (checked) {
-      console.log('remove queen');
-      onQueenRemove(x, y);
-    }
-  }
-  return (
-    <div style={getBoxStyle(checked, disabled)} onClick={onClick} key={`${x}-${y}`}>
-    </div>
-  );
-}
+
 export default App;
 

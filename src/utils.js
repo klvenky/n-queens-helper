@@ -5,33 +5,44 @@ export const getBoxStyle = (checked, disabled) => {
     width: `${dimension}px`,
     height: `${dimension}px`,
     display: 'inline-block',
-    border: '1px solid',
-    margin: '0',
+    border: '1px white',
+    margin: '1px',
+    padding: '1px ',
     background,
     boxSizing: 'border-box',
   };
 };
 
-export function findDisabledBlocks(maxQueens, queenPositions) {
+export function findDisabledBlocks(max, positions) {
   const disabled = [];
-  for (let i = 0; i < queenPositions.length; i += 1) {
-    const { x, y } = queenPositions[i];
-    for (let j = 0; j < maxQueens; j += 1) disabled.push({ x, y: j });
-    for (let j = 0; j < maxQueens; j += 1) disabled.push({ x: j, y });
-    for (let j = 0; j < maxQueens; j += 1) {
-      const t1 = { x: x - j, y: y - j };
-      const t2 = { x: x + j, y: y + j };
-      const t3 = { x: x + j, y: y - j };
-      const t4 = { x: x - j, y: y + j };
-      if (t1.x >= 0 && t1.y >= 0) disabled.push(t1);
-      if (t2.x < maxQueens && t2.y < maxQueens) disabled.push(t2);
-      if (t3.x >= 0 && t3.y >= 0) disabled.push(t3);
-      if (t4.x >= 0 && t4.y >= 0) disabled.push(t4);
+  const shouldDisable = (pt) => {
+    const findFunc = ([vx, vy]) => (([px, py]) => vx === px && vy === py);
+    const findFromPosFunc = ([vx, vy]) => (({ px, py }) => vx === px && vy === py);
+    const disableFound = findIfExists(disabled, pt, findFunc(pt));
+    const queenFound = findIfExists(positions, pt, findFromPosFunc(pt));
+    return !queenFound && !disableFound;
+  }
+  for (let i = 0; i < positions.length; i += 1) {
+    const { x, y } = positions[i];
+    for (let j = 0; j < max; j += 1) {
+      const cpx = [x, j];
+      const cpy = [j, y];
+      shouldDisable(cpx) && disabled.push(cpx);
+      shouldDisable(cpy) && disabled.push(cpy);
+    }
+    for (let j = 0; j < max; j += 1) {
+      const pts = [[x - j, y - j], [x + j, y + j], [x + j, y - j], [x - j, y + j]];
+      pts.forEach((cp) => {
+        const [cx, cy] = cp;
+        const newPosToDisable = shouldDisable(cp);
+        if (newPosToDisable && cx >= 0 && cx < max && cy >= 0 && cy < max) disabled.push(cp);
+      });
     }
   }
-  return disabled.reduce((ptOb, pt) => {
-    let tmp = ptOb;
-    if (tmp.indexOf(pt) === -1) tmp = ptOb.concat(pt);
-    return tmp;
-  }, []);
+  return disabled.map(([x, y]) => ({ x, y }))
+}
+
+function findIfExists(arr, val, findFunc) {
+  if (!findFunc) findFunc = (a) => a === val;
+  return arr.find(findFunc);
 }
