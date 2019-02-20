@@ -5,12 +5,12 @@ import Box from './box';
 import logo from './logo.svg';
 import { findDisabledBlocks } from './utils';
 
-const DEFAULT = 8;
-const SOL_8_8 = [
-  { x: 0, y: 6 }, { x: 1, y: 4 }, { x: 2, y: 7 }, { x: 3, y: 0 },
-  { x: 4, y: 3 }, { x: 5, y: 5 }, { x: 6, y: 2 }, { x: 7, y: 7 }
-];
-const SOL = { 8: SOL_8_8 };
+const DEFAULT = 4;
+const SOL_8_8 = [{ x: 0, y: 5 }, { x: 1, y: 2 }, { x: 2, y: 0 }, { x: 3, y: 6 },
+{ x: 4, y: 4 }, { x: 5, y: 7 }, { x: 6, y: 1 }, { x: 7, y: 3 }];
+const SOL_4_4 = [{ x: 0, y: 3 }, { x: 1, y: 0 }, { x: 2, y: 3 }, { x: 3, y: 1 }];
+
+const SOL = { 8: SOL_8_8, 4: SOL_4_4 };
 const ARR = [];
 for (let i = 0; i < DEFAULT; i += 1) ARR[i] = i;
 
@@ -27,10 +27,10 @@ function App() {
   const [queenBlocks, setQueenBlocks] = useState([]);
   const [disabledPositions, setDisabledPositions] = useState([]);
   useEffect(() => {
-    // console.log('curr queenBlocks ', queenBlocks);
+    console.log('curr queenBlocks ', queenBlocks);
     const update = findDisabledBlocks(queens, queenBlocks);
     const shouldUpdate = !isEqual(update, disabledPositions);
-    // console.log('in effect2 shouldUpdate ===> ', shouldUpdate);
+    console.log('in effect2 shouldUpdate ===> ', shouldUpdate);
     // console.log('diabled ', update.length);
     if (shouldUpdate) setDisabledPositions(update);
   }, [queenBlocks]);
@@ -49,10 +49,10 @@ function App() {
       }
     }
     console.log('removing queen from queenBlocks at ', index);
-    if (index >= 0) {
-      temp.splice(index, 1);
-      console.log('updated remove ', temp);
-      setQueenBlocks(temp);
+    if (index !== -1) {
+      delete temp[index];
+      console.log('updated remove ', temp.filter(t => t));
+      setQueenBlocks(temp.filter(t => t));
     }
   };
   const resetQueens = () => setQueenBlocks([]);
