@@ -15,8 +15,8 @@ const ARR = [];
 for (let i = 0; i < DEFAULT; i += 1) ARR[i] = i;
 
 const Button = (props) => {
-  const { children } = props;
-  return (<button style={{ margin: '0.5rem', padding: '0.5rem', alignSelf: 'center' }} >{children}</button>);
+  const { children, ...rest } = props;
+  return (<button {...rest} style={{ margin: '0.5rem', padding: '0.5rem', alignSelf: 'center' }}>{children}</button>);
 }
 const Link = (props) => {
   const { children, ...rest } = props;
@@ -27,11 +27,11 @@ function App() {
   const [queenBlocks, setQueenBlocks] = useState([]);
   const [disabledPositions, setDisabledPositions] = useState([]);
   useEffect(() => {
-    console.log('curr queenBlocks ', queenBlocks);
+    // console.log('curr queenBlocks ', queenBlocks);
     const update = findDisabledBlocks(queens, queenBlocks);
     const shouldUpdate = !isEqual(update, disabledPositions);
     // console.log('in effect2 shouldUpdate ===> ', shouldUpdate);
-    console.log('diabled ', update.length);
+    // console.log('diabled ', update.length);
     if (shouldUpdate) setDisabledPositions(update);
   }, [queenBlocks]);
   const insertQueen = (x, y) => {
