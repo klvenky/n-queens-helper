@@ -14,7 +14,7 @@
     "eject": "react-scripts eject",
     "deploy": "surge build n-queens-helper.surge.sh",
     "preversion": "npm run build",
-    "postversion": "npm run deploy && git push origin"
+    "postversion": "npm run deploy && git push origin --tags"
   },
   "eslintConfig": {
     "extends": "react-app"
