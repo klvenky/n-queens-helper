@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import Box from './box';
 import reactLogo from './react-logo.svg';
-import { Button, ButtonLink, Link } from './silly-comps';
+import { Button, LinkButton, Footer } from './silly-comps';
 import Solutions from './solutions';
 import { findDisabledBlocks } from './util-funcs';
 
@@ -67,7 +67,9 @@ function App() {
               <p>Not all solutions are available.</p>
               <p>Please feel free to add your solutions.</p>
             </div>)}
-          <div><ButtonLink href="https://github.com/klvenky">+ Follow Me</ButtonLink></div>
+          <div>
+            <LinkButton href="https://github.com/klvenky">+ Follow Me</LinkButton>
+          </div>
         </div>
       </div>
       <div className="div-bg">
@@ -92,12 +94,7 @@ function App() {
             </div>
           ))}
         </div>
-        <div className="footer">
-          Crown icon by <Link href="https://www.freepik.com/" title="Freepik">Freepik</Link>&nbsp;from&nbsp;
-          <Link href="https://www.flaticon.com/" title="Flaticon" style={{ textDecorationColor: 'red', textDecoration: 'none' }}>
-            flaticon&nbsp;</Link>is licensed by&nbsp;
-          <Link href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</Link>
-        </div>
+        <Footer />
       </div>
     </div>
   );
