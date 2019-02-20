@@ -1,6 +1,6 @@
 import React from 'react';
 import crown from './crown';
-import { getBoxStyle } from './utils';
+import { getBoxStyle } from './util-funcs';
 
 export default function Box(props) {
   const { checked, disabled, insertQueen, x, y, removeQueen } = props;

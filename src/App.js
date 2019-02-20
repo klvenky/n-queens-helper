@@ -2,35 +2,25 @@ import isEqual from 'lodash/isEqual';
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import Box from './box';
-import logo from './logo.svg';
-import { findDisabledBlocks } from './utils';
+import reactLogo from './react-logo.svg';
+import { Button, ButtonLink, Link } from './silly-comps';
+import Solutions from './solutions';
+import { findDisabledBlocks } from './util-funcs';
 
-const DEFAULT = 4;
-const SOL_8_8 = [{ x: 0, y: 5 }, { x: 1, y: 2 }, { x: 2, y: 0 }, { x: 3, y: 6 },
-{ x: 4, y: 4 }, { x: 5, y: 7 }, { x: 6, y: 1 }, { x: 7, y: 3 }];
-const SOL_4_4 = [{ x: 0, y: 3 }, { x: 1, y: 0 }, { x: 2, y: 3 }, { x: 3, y: 1 }];
-
-const SOL = { 8: SOL_8_8, 4: SOL_4_4 };
+const DEFAULT = 8;
 const ARR = [];
 for (let i = 0; i < DEFAULT; i += 1) ARR[i] = i;
 
-const Button = (props) => {
-  const { children, ...rest } = props;
-  return (<button {...rest} style={{ margin: '0.5rem', padding: '0.5rem', alignSelf: 'center' }}>{children}</button>);
-}
-const Link = (props) => {
-  const { children, ...rest } = props;
-  return (<a {...rest} rel="noreferrer noopener">{children}</a>);
-}
 function App() {
   const [queens] = useState(DEFAULT);
   const [queenBlocks, setQueenBlocks] = useState([]);
+  const [missingSolMsg, setMissingSolMsg] = useState(false);
   const [disabledPositions, setDisabledPositions] = useState([]);
   useEffect(() => {
-    console.log('curr queenBlocks ', queenBlocks);
+    // console.log('curr queenBlocks ', queenBlocks);
     const update = findDisabledBlocks(queens, queenBlocks);
     const shouldUpdate = !isEqual(update, disabledPositions);
-    console.log('in effect2 shouldUpdate ===> ', shouldUpdate);
+    // console.log('in effect2 shouldUpdate ===> ', shouldUpdate);
     // console.log('diabled ', update.length);
     if (shouldUpdate) setDisabledPositions(update);
   }, [queenBlocks]);
@@ -48,25 +38,36 @@ function App() {
         break;
       }
     }
-    console.log('removing queen from queenBlocks at ', index);
+    // console.log('removing queen from queenBlocks at ', index);
     if (index !== -1) {
       delete temp[index];
-      console.log('updated remove ', temp.filter(t => t));
+      // console.log('updated remove ', temp.filter(t => t));
       setQueenBlocks(temp.filter(t => t));
     }
   };
   const resetQueens = () => setQueenBlocks([]);
-  const showSolution = () => setQueenBlocks(SOL[queens]);
+  const showSolution = () => {
+    const solution = Solutions[queens]
+    console.log(solution);
+    if (solution) setQueenBlocks(solution);
+    else setMissingSolMsg(true);
+  };
   return (
     <div className="App">
       <div className="App-header">
         <div>
-          <img src={logo} className="App-logo" alt="logo" />
+          <img src={reactLogo} className="App-logo" alt="logo" />
           <p>
             Welcome to N-Queens Helper
           </p>
           <div><Button onClick={resetQueens}>Reset</Button></div>
           <div><Button onClick={showSolution}>Solution</Button></div>
+          {missingSolMsg && (
+            <div>
+              <p>Not all solutions are available.</p>
+              <p>Please feel free to add your solutions.</p>
+            </div>)}
+          <div><ButtonLink href="https://github.com/klvenky">+ Follow Me</ButtonLink></div>
         </div>
       </div>
       <div className="div-bg">
@@ -91,14 +92,12 @@ function App() {
             </div>
           ))}
         </div>
-        <footer>
-          <div style={{ textAlign: 'center' }}>
-            Crown icon by <Link href="https://www.freepik.com/" title="Freepik">Freepik</Link>&nbsp;from&nbsp;
-            <Link href="https://www.flaticon.com/" title="Flaticon" style={{ textDecorationColor: 'red', textDecoration: 'none' }}>
-              flaticon&nbsp;</Link>is licensed by&nbsp;
-            <Link href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</Link>
-          </div>
-        </footer>
+        <div className="footer">
+          Crown icon by <Link href="https://www.freepik.com/" title="Freepik">Freepik</Link>&nbsp;from&nbsp;
+          <Link href="https://www.flaticon.com/" title="Flaticon" style={{ textDecorationColor: 'red', textDecoration: 'none' }}>
+            flaticon&nbsp;</Link>is licensed by&nbsp;
+          <Link href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</Link>
+        </div>
       </div>
     </div>
   );

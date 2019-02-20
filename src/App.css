@@ -13,6 +13,7 @@ body {
   flex-direction: row;
   height: 100vh;
   min-width: 768px;
+  text-align: 'center';
 }
 
 .App-logo {
@@ -41,4 +42,9 @@ body {
   to {
     transform: rotate(360deg);
   }
+}
+.footer {
+  position:absolute;
+   bottom:0;
+   height:30px;   /* Height of the footer */
 }
