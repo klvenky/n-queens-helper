@@ -6,9 +6,18 @@ import logo from './logo.svg';
 import { findDisabledBlocks } from './utils';
 
 const DEFAULT = 8;
+const SOL_8_8 = [
+  { x: 0, y: 6 }, { x: 1, y: 4 }, { x: 2, y: 7 }, { x: 3, y: 0 },
+  { x: 4, y: 3 }, { x: 5, y: 5 }, { x: 6, y: 2 }, { x: 7, y: 7 }
+];
+const SOL = { 8: SOL_8_8 };
 const ARR = [];
 for (let i = 0; i < DEFAULT; i += 1) ARR[i] = i;
 
+const Button = (props) => {
+  const { children } = props;
+  return (<button style={{ margin: '0.5rem', padding: '0.5rem', alignSelf: 'center' }} >{children}</button>);
+}
 const Link = (props) => {
   const { children, ...rest } = props;
   return (<a {...rest} rel="noreferrer noopener">{children}</a>);
@@ -47,15 +56,17 @@ function App() {
     }
   };
   const resetQueens = () => setQueenBlocks([]);
+  const showSolution = () => setQueenBlocks(SOL[queens]);
   return (
     <div className="App">
       <div className="App-header">
-        <div style={{ alignContent: 'center' }}>
+        <div>
           <img src={logo} className="App-logo" alt="logo" />
           <p>
             Welcome to N-Queens Helper
           </p>
-          <button onClick={resetQueens}>Reset</button>
+          <div><Button onClick={resetQueens}>Reset</Button></div>
+          <div><Button onClick={showSolution}>Solution</Button></div>
         </div>
       </div>
       <div className="div-bg">
@@ -84,7 +95,7 @@ function App() {
           <div style={{ textAlign: 'center' }}>
             Crown icon by <Link href="https://www.freepik.com/" title="Freepik">Freepik</Link>&nbsp;from&nbsp;
             <Link href="https://www.flaticon.com/" title="Flaticon" style={{ textDecorationColor: 'red', textDecoration: 'none' }}>
-            flaticon&nbsp;</Link>is licensed by&nbsp;
+              flaticon&nbsp;</Link>is licensed by&nbsp;
             <Link href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</Link>
           </div>
         </footer>
