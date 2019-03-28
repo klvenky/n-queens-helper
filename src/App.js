@@ -17,11 +17,8 @@ function App() {
   const [missingSolMsg, setMissingSolMsg] = useState(false);
   const [disabledPositions, setDisabledPositions] = useState([]);
   useEffect(() => {
-    // console.log('curr queenBlocks ', queenBlocks);
     const update = findDisabledBlocks(queens, queenBlocks);
     const shouldUpdate = !isEqual(update, disabledPositions);
-    // console.log('in effect2 shouldUpdate ===> ', shouldUpdate);
-    // console.log('diabled ', update.length);
     if (shouldUpdate) setDisabledPositions(update);
   }, [queenBlocks]);
   const insertQueen = (x, y) => {
@@ -38,10 +35,8 @@ function App() {
         break;
       }
     }
-    // console.log('removing queen from queenBlocks at ', index);
     if (index !== -1) {
       delete temp[index];
-      // console.log('updated remove ', temp.filter(t => t));
       setQueenBlocks(temp.filter(t => t));
     }
   };
