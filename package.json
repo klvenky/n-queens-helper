@@ -1,6 +1,6 @@
 {
   "name": "n-queens-helper-ui",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "private": true,
   "dependencies": {
     "react": "^16.8.6",
@@ -12,7 +12,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "surge build n-queens-helper.surge.sh",
+    "deploy": "netlify deploy -d build",
     "preversion": "npm run build",
     "postversion": "npm run deploy && git push && git push origin --tags"
   },
