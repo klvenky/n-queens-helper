@@ -24,7 +24,7 @@ function App(props) {
   const insertQueen = (x, y) => {
     const disabledBlock =
       disabledPositions.length > 0 &&
-      disabledPositions.find(a => a.x === x && a.y === y);
+      disabledPositions.find((a) => a.x === x && a.y === y);
     if (!disabledBlock) setQueenBlocks(queenBlocks.concat({ x, y }));
   };
   const removeQueen = (x, y) => {
@@ -39,7 +39,7 @@ function App(props) {
     }
     if (index !== -1) {
       delete temp[index];
-      setQueenBlocks(temp.filter(t => t));
+      setQueenBlocks(temp.filter((t) => t));
     }
   };
   const resetQueens = () => setQueenBlocks([]);
@@ -76,14 +76,14 @@ function App(props) {
       </div>
       <div className="div-bg">
         <div className="Queen-board">
-          {ARR.map(x => (
+          {ARR.map((x) => (
             <div key={`div-${x}`}>
-              {ARR.map(y => {
+              {ARR.map((y) => {
                 const queenPlaced = !!queenBlocks.find(
-                  a => a.x === x && a.y === y
+                  (a) => a.x === x && a.y === y
                 );
                 const isDisabled = disabledPositions.find(
-                  a => a.x === x && a.y === y
+                  (a) => a.x === x && a.y === y
                 );
                 return (
                   <ChessBox
