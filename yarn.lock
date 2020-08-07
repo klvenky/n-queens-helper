@@ -9961,6 +9961,7 @@ fsevents@^1.2.7:
   version: 0.0.0-use.local
   resolution: "n-queens-helper-ui@workspace:."
   dependencies:
+    lodash: ^4.17.19
     react: ^16.13.1
     react-dom: ^16.13.1
     react-scripts: 3.4.1
