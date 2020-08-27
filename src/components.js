@@ -1,6 +1,7 @@
-import { default as React, default as React } from "react";
+import React from "react";
 import crown from "./crown";
 import { getBoxStyle } from "./util-funcs";
+
 
 export const Button = (props) => {
   const { children, ...rest } = props;
@@ -65,10 +66,9 @@ export const Footer = () => {
 };
 
 export function ChessBox(props) {
-  const { checked, disabled, insertQueen, x, y, removeQueen } = props;
+  const { checked, disabled, x, y, toggleQueen } = props;
   const onClick = () => {
-    if (!disabled) insertQueen(x, y);
-    else if (checked) removeQueen(x, y);
+    toggleQueen(x, y);
   };
   return (
     <div style={getBoxStyle(checked, disabled)} onClick={onClick}>

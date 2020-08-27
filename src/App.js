@@ -53,6 +53,26 @@ function App(props) {
     else setNoSolutionMessage(true);
   };
 
+  const toggleQueen = (x, y) => {
+    const hasQueen = queenBlocks.find(
+      (block) => block.x === x && block.y === y
+    );
+    if (hasQueen) removeQueenAt(x, y);
+    else {
+      const disabledBlockClicked =
+        disabledPositions.length > 0 &&
+        disabledPositions.find((a) => a.x === x && a.y === y);
+
+      // console.log({
+      //   disabled: !!disabledBlockClicked,
+      //   disabledBlockClicked,
+      //   hasQueen,
+      // });
+      if (!disabledBlockClicked) {
+        setQueenBlocks(queenBlocks.concat({ x, y }));
+      }
+    }
+  };
   return (
     <div className="App">
       <div className="App-header">
@@ -95,9 +115,8 @@ function App(props) {
                     x={x}
                     y={y}
                     checked={hasQueen}
-                    insertQueen={placeQueenAt}
                     disabled={disabled}
-                    removeQueen={removeQueenAt}
+                    toggleQueen={toggleQueen}
                   />
                 );
               })}

@@ -8961,7 +8961,7 @@ fsevents@^1.2.7:
     react: ^16.13.1
     react-dom: ^16.13.1
     react-scripts: 3.4.3
-    yarn: ^1.22.4
+    yarn: ^1.22.5
   languageName: unknown
   linkType: soft
 
@@ -14122,12 +14122,12 @@ resolve@1.1.7:
   languageName: node
   linkType: hard
 
-"yarn@npm:^1.22.4":
-  version: 1.22.4
-  resolution: "yarn@npm:1.22.4"
+"yarn@npm:^1.22.5":
+  version: 1.22.5
+  resolution: "yarn@npm:1.22.5"
   bin:
-    yarn: ./bin/yarn.js
-    yarnpkg: ./bin/yarn.js
-  checksum: 6c37d4ef69eae55f4543dfd28b81cb0aa5d742aa4505ef591214de262afe358cbb116c4e8238b5a1c43d8c86d7437c101b65248f037852a8b677927ba42629bf
+    yarn: bin/yarn.js
+    yarnpkg: bin/yarn.js
+  checksum: b41a5337f334f490baa3c4d1f55ef286cab0de3b1a0b06f5a999a0605f212b26d89b1c3dbdc6cde17a4adb7899dd10350feefc00265d926c50ebace033208e75
   languageName: node
   linkType: hard
