@@ -1,6 +1,8 @@
-import React from "react";
+import { default as React, default as React } from "react";
+import crown from "./crown";
+import { getBoxStyle } from "./util-funcs";
 
-export const Button = props => {
+export const Button = (props) => {
   const { children, ...rest } = props;
   return (
     <button
@@ -12,7 +14,7 @@ export const Button = props => {
   );
 };
 
-export const Link = props => {
+export const Link = (props) => {
   const { children, ...rest } = props;
   const extra = {};
   if (rest.target === "_blank") extra.rel = "noreferrer noopener";
@@ -23,7 +25,7 @@ export const Link = props => {
   );
 };
 
-export const LinkButton = props => {
+export const LinkButton = (props) => {
   const { children, ...rest } = props;
   return (
     <Link
@@ -61,3 +63,16 @@ export const Footer = () => {
     </div>
   );
 };
+
+export function ChessBox(props) {
+  const { checked, disabled, insertQueen, x, y, removeQueen } = props;
+  const onClick = () => {
+    if (!disabled) insertQueen(x, y);
+    else if (checked) removeQueen(x, y);
+  };
+  return (
+    <div style={getBoxStyle(checked, disabled)} onClick={onClick}>
+      {checked && crown()}
+    </div>
+  );
+}

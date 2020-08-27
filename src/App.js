@@ -1,9 +1,8 @@
 import isEqual from "lodash/isEqual";
 import React, { useEffect, useState } from "react";
 import "./App.css";
-import ChessBox from "./chess-box";
+import { Button, ChessBox, Footer, LinkButton } from "./components";
 import reactLogo from "./react-logo.svg";
-import { Button, LinkButton, Footer } from "./silly-comps";
 import Solutions from "./solutions";
 import { findDisabledBlocks } from "./util-funcs";
 
@@ -14,20 +13,23 @@ for (let i = 0; i < DEFAULT; i += 1) ARR[i] = i;
 function App(props) {
   const { queens = 8 } = props;
   const [queenBlocks, setQueenBlocks] = useState([]);
-  const [missingSolMsg, setMissingSolMsg] = useState(false);
+  const [noSolutionMessage, setNoSolutionMessage] = useState(false);
   const [disabledPositions, setDisabledPositions] = useState([]);
+
   useEffect(() => {
     const update = findDisabledBlocks(queens, queenBlocks);
     const shouldUpdate = !isEqual(update, disabledPositions);
     if (shouldUpdate) setDisabledPositions(update);
   }, [queens, disabledPositions, queenBlocks]);
-  const insertQueen = (x, y) => {
+
+  const placeQueenAt = (x, y) => {
     const disabledBlock =
       disabledPositions.length > 0 &&
       disabledPositions.find((a) => a.x === x && a.y === y);
     if (!disabledBlock) setQueenBlocks(queenBlocks.concat({ x, y }));
   };
-  const removeQueen = (x, y) => {
+
+  const removeQueenAt = (x, y) => {
     const temp = queenBlocks;
     let index = -1;
     for (let i = 0; i < queens; i++) {
@@ -42,13 +44,15 @@ function App(props) {
       setQueenBlocks(temp.filter((t) => t));
     }
   };
-  const resetQueens = () => setQueenBlocks([]);
+
+  const removeAllQueens = () => setQueenBlocks([]);
+
   const showSolution = () => {
     const solution = Solutions[queens];
-    console.log(solution);
     if (solution) setQueenBlocks(solution);
-    else setMissingSolMsg(true);
+    else setNoSolutionMessage(true);
   };
+
   return (
     <div className="App">
       <div className="App-header">
@@ -56,12 +60,12 @@ function App(props) {
           <img src={reactLogo} className="App-logo" alt="logo" />
           <p>Welcome to N-Queens Helper</p>
           <div>
-            <Button onClick={resetQueens}>Reset</Button>
+            <Button onClick={removeAllQueens}>Reset</Button>
           </div>
           <div>
             <Button onClick={showSolution}>Solution</Button>
           </div>
-          {missingSolMsg && (
+          {noSolutionMessage && (
             <div>
               <p>Not all solutions are available.</p>
               <p>Please feel free to add your solutions.</p>
@@ -79,21 +83,21 @@ function App(props) {
           {ARR.map((x) => (
             <div key={`div-${x}`}>
               {ARR.map((y) => {
-                const queenPlaced = !!queenBlocks.find(
+                const hasQueen = !!queenBlocks.find(
                   (a) => a.x === x && a.y === y
                 );
-                const isDisabled = disabledPositions.find(
-                  (a) => a.x === x && a.y === y
-                );
+                const disabled =
+                  disabledPositions.findIndex((a) => a.x === x && a.y === y) !==
+                  -1;
                 return (
                   <ChessBox
-                    key={`pos-${x}-${y}-${isDisabled}`}
+                    key={`pos-${x}-${y}-${disabled}`}
                     x={x}
                     y={y}
-                    checked={queenPlaced}
-                    insertQueen={insertQueen}
-                    disabled={isDisabled}
-                    removeQueen={removeQueen}
+                    checked={hasQueen}
+                    insertQueen={placeQueenAt}
+                    disabled={disabled}
+                    removeQueen={removeQueenAt}
                   />
                 );
               })}
