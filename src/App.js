@@ -22,13 +22,6 @@ function App(props) {
     if (shouldUpdate) setDisabledPositions(update);
   }, [queens, disabledPositions, queenBlocks]);
 
-  const placeQueenAt = (x, y) => {
-    const disabledBlock =
-      disabledPositions.length > 0 &&
-      disabledPositions.find((a) => a.x === x && a.y === y);
-    if (!disabledBlock) setQueenBlocks(queenBlocks.concat({ x, y }));
-  };
-
   const removeQueenAt = (x, y) => {
     const temp = queenBlocks;
     let index = -1;
