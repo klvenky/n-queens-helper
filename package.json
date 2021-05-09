@@ -3,7 +3,7 @@
   "version": "0.3.4",
   "private": true,
   "dependencies": {
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.3"
@@ -24,7 +24,7 @@
     "not op_mini all"
   ],
   "resolutions": {
-    "lodash": "4.17.14"
+    "lodash": "4.17.21"
   },
   "devDependencies": {
     "yarn": "^1.22.5"
