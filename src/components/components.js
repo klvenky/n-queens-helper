@@ -1,7 +1,6 @@
 import React from "react";
 import crown from "./crown";
-import { getBoxStyle } from "./util-funcs";
-
+import { getBoxStyle } from "../utils/util-funcs";
 
 export const Button = (props) => {
   const { children, ...rest } = props;
@@ -38,6 +37,7 @@ export const LinkButton = (props) => {
     </Link>
   );
 };
+
 export const Footer = () => {
   return (
     <div className="footer">

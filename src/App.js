@@ -1,10 +1,10 @@
 import isEqual from "lodash/isEqual";
 import React, { useEffect, useState } from "react";
 import "./App.css";
-import { Button, ChessBox, Footer, LinkButton } from "./components";
+import { Button, ChessBox, Footer, LinkButton } from "./components/components";
 import reactLogo from "./react-logo.svg";
-import Solutions from "./solutions";
-import { findDisabledBlocks } from "./util-funcs";
+import Solutions from "./utils/solutions";
+import { findDisabledBlocks } from "./utils/util-funcs";
 
 const DEFAULT = 8;
 const ARR = [];

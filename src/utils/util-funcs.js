@@ -9,16 +9,22 @@ export const getBoxStyle = (checked, disabled) => {
     margin: "1px",
     padding: "1px ",
     background,
-    boxSizing: "border-box"
+    boxSizing: "border-box",
+    cursor: checked ? "pointer" : disabled ? "not-allowed" : "pointer",
   };
 };
 
 export function findDisabledBlocks(max, positions) {
   const disabled = [];
-  const shouldDisable = pt => {
-    const findFunc = ([vx, vy]) => ([px, py]) => vx === px && vy === py;
-    const findFromPosFunc = ([vx, vy]) => ({ px, py }) =>
-      vx === px && vy === py;
+  const shouldDisable = (pt) => {
+    const findFunc =
+      ([vx, vy]) =>
+      ([px, py]) =>
+        vx === px && vy === py;
+    const findFromPosFunc =
+      ([vx, vy]) =>
+      ({ px, py }) =>
+        vx === px && vy === py;
     const disableFound = findIfExists(disabled, pt, findFunc(pt));
     const queenFound = findIfExists(positions, pt, findFromPosFunc(pt));
     return !queenFound && !disableFound;
@@ -36,9 +42,9 @@ export function findDisabledBlocks(max, positions) {
         [x - j, y - j],
         [x + j, y + j],
         [x + j, y - j],
-        [x - j, y + j]
+        [x - j, y + j],
       ];
-      pts.forEach(cp => {
+      pts.forEach((cp) => {
         const [cx, cy] = cp;
         const newPosToDisable = shouldDisable(cp);
         if (newPosToDisable && cx >= 0 && cx < max && cy >= 0 && cy < max)
@@ -50,6 +56,6 @@ export function findDisabledBlocks(max, positions) {
 }
 
 function findIfExists(arr, val, findFunc) {
-  if (!findFunc) findFunc = a => a === val;
+  if (!findFunc) findFunc = (a) => a === val;
   return arr.find(findFunc);
 }
