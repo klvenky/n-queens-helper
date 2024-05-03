@@ -6,4 +6,4 @@ Run `npm install` to install dependencies
 
 Run `npm start` to start the local server
 
-Try it live [here](https://n-queens-helper.netlify.com)
+Try it live [here](https://n-queens-helper.netlify.app)
