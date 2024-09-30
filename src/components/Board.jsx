@@ -1,8 +1,14 @@
 import isEqual from "lodash/isEqual";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { ChessBox } from "./ChessBox";
 import { Footer } from "./Footer";
 import { findDisabledBlocks } from "../utils/util-funcs";
+
+const getMapper = (queens) => {
+  const Mapper = [];
+  for (let i = 0; i < queens; i += 1) Mapper[i] = i;
+  return Mapper;
+};
 
 export function Board(props) {
   const {
@@ -12,8 +18,7 @@ export function Board(props) {
     setDisabledPositions,
     setQueenBlocks,
   } = props;
-  const ARR = [];
-  for (let i = 0; i < queens; i += 1) ARR[i] = i;
+  const Mapper = useMemo(() => getMapper(queens), [queens]);
 
   useEffect(() => {
     const update = findDisabledBlocks(queens, queenBlocks);
@@ -56,9 +61,9 @@ export function Board(props) {
   return (
     <div className="div-bg">
       <div className="Queen-board">
-        {ARR.map((row) => (
+        {Mapper.map((row) => (
           <div key={`div-${row}`}>
-            {ARR.map((column) => {
+            {Mapper.map((column) => {
               const hasQueen = !!queenBlocks.find(
                 (a) => a.x === row && a.y === column
               );

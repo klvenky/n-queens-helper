@@ -1,17 +1,17 @@
 import isEqual from "lodash/isEqual";
 import React, { useEffect, useState } from "react";
-import "./App.css";
 import { Board } from "./components/Board";
 import { LeftPanel } from "./components/LeftPanel";
 import Solutions from "./utils/solutions";
 import { findDisabledBlocks } from "./utils/util-funcs";
+import { useSearchParams } from "react-router-dom";
 
-const DEFAULT = 4;
-const ARR = [];
-for (let i = 0; i < DEFAULT; i += 1) ARR[i] = i;
+import "./App.css";
 
-function App(props) {
-  const { queens = DEFAULT } = props;
+function App() {
+  const [searchParams] = useSearchParams();
+  const queens = Number(searchParams.get("queens") || "4") || 4;
+
   const [queenBlocks, setQueenBlocks] = useState([]);
   const [noSolutionMessage, setNoSolutionMessage] = useState(false);
   const [disabledPositions, setDisabledPositions] = useState([]);
